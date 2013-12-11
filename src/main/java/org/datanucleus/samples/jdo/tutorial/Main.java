@@ -17,8 +17,10 @@ Contributors:
 **********************************************************************/
 package org.datanucleus.samples.jdo.tutorial;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.PersistenceManagerFactory;
@@ -136,8 +138,58 @@ public class Main
             pm.close();
         }
         System.out.println("");
+        //Create new Store and set inventory
+        pm = pmf.getPersistenceManager();
+        tx = pm.currentTransaction();
+        try
+        {
+            tx.begin();
+            System.out.println("Creating new Store, inventory and Product");
+            Inventory inventory=new Inventory("Paanwala");
+            Set<Product> products=new HashSet<Product>();
+            products.add(new Product("Chai","Tea",20));
+            products.add(new Product("Sutta","Milds",8));
+            products.add(new Product("Biscuit","parleg",3));
+            products.add(new Product("Coffee","kaapi",100));
+            inventory.getProducts().addAll(products);
+            Store store=new Store("Benaras da Paan",inventory);
+            pm.makePersistent(store);
+            tx.commit();
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+        System.out.println("");
 
-        // Clean out the database
+        //retrieve Store
+        pm = pmf.getPersistenceManager();
+        tx = pm.currentTransaction();
+        try
+        {
+            System.out.println("Retrieve all Store, inventory and Product");
+            tx.begin();
+            Store store= pm.getObjectById(Store.class,"Benaras da Paan");
+                System.out.println(store);
+                System.out.println(store.getInventory().getProducts());
+
+            tx.commit();
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+        System.out.println("");
+
+        /*// Clean out the database
         pm = pmf.getPersistenceManager();
         tx = pm.currentTransaction();
         try
@@ -170,6 +222,6 @@ public class Main
         }
 
         System.out.println("");
-        System.out.println("End of Tutorial");
+        System.out.println("End of Tutorial");*/
     }
 }

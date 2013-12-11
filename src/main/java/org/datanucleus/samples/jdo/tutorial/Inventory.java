@@ -32,6 +32,8 @@ public class Inventory
     @PrimaryKey
     protected String name=null;
 
+    private Store store;
+
     protected Set<Product> products = new HashSet<Product>();
 
     public Inventory(String name)
@@ -53,4 +55,13 @@ public class Inventory
     {
         return "Inventory : " + name;
     }
+
+    public Store getStore() {
+        return store;
+    }
+
+    public void setStore(Store store) {
+        this.store = store;
+    }
+
 }

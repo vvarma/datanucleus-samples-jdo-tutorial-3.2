@@ -9,6 +9,9 @@
             <field name="products" table="INVENTORY_PRODUCTS">
                 <join/>
             </field>
+            <field name="store">
+                <column name="STORE"/>
+            </field>
         </class>
 
         <class name="Product" table="PRODUCTS">
@@ -33,5 +36,15 @@
                 <column length="40"/>
             </field>
         </class>
+
+        <class name="Store" table="STORE">
+             <field name="name">
+                <column name="STORE_NAME" length="100"/>
+             </field>
+             <field name="inventory" mapped-by="store">
+                <column name="PRODUCT_NAME" length="100"/>
+             </field>
+        </class>
+
     </package>
 </orm>
