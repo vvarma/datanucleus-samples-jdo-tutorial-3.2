@@ -166,7 +166,7 @@ public class Main
         }
         System.out.println("");
 
-        //retrieve Store
+        //retrieve Store add Users to products
         pm = pmf.getPersistenceManager();
         tx = pm.currentTransaction();
         try
@@ -174,8 +174,38 @@ public class Main
             System.out.println("Retrieve all Store, inventory and Product");
             tx.begin();
             Store store= pm.getObjectById(Store.class,"Benaras da Paan");
-                System.out.println(store);
-                System.out.println(store.getInventory().getProducts());
+            Set<Product> products;
+            System.out.println(store);
+            System.out.println((products=store.getInventory().getProducts()));
+            User user=new User("Phaijal");
+
+            for (Product product:products){
+                user.addProduct(product);
+                product.getOwners().add(user);
+            }
+
+            tx.commit();
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+        System.out.println("");
+
+        //retrieve User
+        pm = pmf.getPersistenceManager();
+        tx = pm.currentTransaction();
+        try
+        {
+            System.out.println("Retrieve all Store, inventory and Product");
+            tx.begin();
+            User userRetrieved;
+            System.out.println((userRetrieved=pm.getObjectById(User.class,"Phaijal")));
+            //System.out.println(userRetrieved.getProducts());
 
             tx.commit();
         }

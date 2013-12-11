@@ -22,6 +22,9 @@
             <field name="name">
                 <column name="PRODUCT_NAME" length="100"/>
             </field>
+            <field name="owners" mapped-by="products">
+                <collection element-type="org.datanucleus.samples.jdo.tutorial.User"/>
+            </field>
         </class>
 
         <class name="Book" table="BOOKS">
@@ -45,6 +48,19 @@
                 <column name="PRODUCT_NAME" length="100"/>
              </field>
         </class>
-
+        <class name="User" table="OWNED_BY">
+            <field name="name">
+                <column name="STORE_NAME" length="100"/>
+            </field>
+            <field name="products" table="OWNERSHIPS">
+                <collection element-type="org.datanucleus.samples.jdo.tutorial.Product"/>
+                <join>
+                    <column name="OWNER_NAME"/>
+                </join>
+                <element>
+                    <column name="PRODUCT_OWNED"/>
+                </element>
+            </field>
+        </class>
     </package>
 </orm>

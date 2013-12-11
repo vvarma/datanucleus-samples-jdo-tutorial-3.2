@@ -9,6 +9,7 @@
         <class>org.datanucleus.samples.jdo.tutorial.Product</class>
         <class>org.datanucleus.samples.jdo.tutorial.Book</class>
         <class>org.datanucleus.samples.jdo.tutorial.Store</class>
+        <class>org.datanucleus.samples.jdo.tutorial.User</class>
         <exclude-unlisted-classes/>
         <properties>
             <!-- ENABLE THESE FOR H2 -->

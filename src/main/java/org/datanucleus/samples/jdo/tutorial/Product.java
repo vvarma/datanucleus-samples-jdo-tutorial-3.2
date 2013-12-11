@@ -21,6 +21,8 @@ import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Definition of a Product
@@ -39,11 +41,14 @@ public class Product
 
     protected double price=0.0;
 
+    private List<User> owners;
+
     public Product(String name, String description, double price)
     {
         this.name = name;
         this.description = description;
         this.price = price;
+        owners=new ArrayList<User>();
     }
 
     public long getId()
@@ -81,8 +86,20 @@ public class Product
         this.price = price;
     }
 
-    public String toString()
-    {
-        return "Product : " + id + " name=" + name + " [" + description + "]";
+    public List<User> getOwners() {
+        return owners;
+    }
+
+    public void setOwners(List<User> owners) {
+        this.owners = owners;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                ", price=" + price +
+                ", description='" + description + '\'' +
+                ", name='" + name + '\'' +
+                '}';
     }
 }
